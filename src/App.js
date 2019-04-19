@@ -11,13 +11,21 @@ const client = new ApolloClient({
 const helloQuery = gql`
     {
         hello
+        catPhotoUrl
     }
 `;
 
 const LambdaDemo = () => (
     <ApolloProvider client={client}>
         <Query query={helloQuery}>
-            {({ data }) => <div>A greeting from the server: {data.hello}</div>}
+            {({ data, loading }) => (
+                <div>
+                    A greeting from the server:{" "}
+                    {loading ? "loading" : data.hello}
+                    <br />
+                    <img src={data.catPhotoUrl} />
+                </div>
+            )}
         </Query>
     </ApolloProvider>
 );
